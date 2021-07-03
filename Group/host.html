@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/osql.js"></script>
+
+    <script>
+        osql.requireLogin();
+
+        $(document).ready(function () {
+            doSelect();
+            //memberUpdate();
+        });
+
+        //function memberUpdate() {
+        //setInterval(doSelect, 1000);
+        //}
+
+        async function doSelect() {
+            var sql = 'select * from Members;';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1"><th>学籍番号</th><th>名前</th><th>ニックネーム</th>';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<tr>';
+                html = html + '<td>' + object.studentid + '</td>';
+                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + object.nickname + '</td>';
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('result').innerHTML = html;
+            document.getElementById('count').innerHTML = objects.length + '人が参加しています';
+        }
+
+        
+
+
+
+
+    </script>
+
+</head>
+
+<body>
+    <h1>参加者一覧</h1>
+    <br>
+    <p id="result"></p>
+    <p id="count"></p>
+
+</body>
+
+</html>
