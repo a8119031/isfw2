@@ -13,19 +13,23 @@
 
         $(document).ready(function () {
             doSelect();
-            //memberUpdate();
+            memberUpdate();
         });
 
-        //function memberUpdate() {
-        //setInterval(doSelect, 1000);
-        //}
+        function memberUpdate() {
+            setInterval(doSelect, 1000);
+        }
+
 
         async function doSelect() {
             var sql = 'select * from Members;';
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
-            html = html + '<table border="1"><th>学籍番号</th><th>名前</th><th>ニックネーム</th>';
+            html = html + '<table border="1">';
+            html = html + '<tr>';
+            html = html + '<th>学籍番号</th><th>名前</th><th>ニックネーム</th>';
+            html = html + '</tr>'
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
                 html = html + '<tr>';
@@ -37,12 +41,15 @@
             html = html + '</table>';
             document.getElementById('result').innerHTML = html;
             document.getElementById('count').innerHTML = objects.length + '人が参加しています';
+
+            //var number = document.getElementById('divnumber').value;
+            //sessionStorage.setItem('division', number);
         }
 
-        
-
-
-
+        function decision(){
+            clearInterval(memberUpdate);
+            location.href='group.html';
+        }
 
     </script>
 
@@ -53,6 +60,8 @@
     <br>
     <p id="result"></p>
     <p id="count"></p>
+    <input id="divNumber" value="" type="textfield">グループに分けます
+    <button onclick="decision()">決定</button>
 
 </body>
 
