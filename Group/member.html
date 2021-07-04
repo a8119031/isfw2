@@ -16,7 +16,7 @@
             var name = document.getElementById('tf2').value;
             var nickname = document.getElementById('tf3').value;
 
-            var sql = `insert into Members (studentid, name, nickname) values("${studentid}", "${name}", "${nickname}");`;
+            var sql = `insert into Members (studentid, name, nickname, time) values("${studentid}", "${name}", "${nickname}", now());`;
             var objects = await osql.connect(sql);
             console.log(objects);
 
