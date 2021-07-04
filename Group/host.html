@@ -19,7 +19,7 @@
         var memberUpdate = setInterval(doSelect, 1000);
 
         async function doSelect() {
-            var sql = 'select * from Members order by time;';
+            var sql = 'select distinct * from Members order by time;';
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
@@ -30,7 +30,7 @@
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
                 html = html + '<tr>';
-                html = html + '<td>' + object.studentid + '</td>';
+                html = html + '<td>' + object.id + '</td>';
                 html = html + '<td>' + object.name + '</td>';
                 html = html + '<td>' + object.nickname + '</td>';
                 html = html + '</tr>';
@@ -46,16 +46,25 @@
             clearInterval(memberUpdate);
             //location.href='group.html';
             var number = document.getElementById('divNumber').value;
+            sessionStorage.setItem('n', number);
             var sql = 'select * from Members;';
             var objects = await osql.connect(sql);
             console.log(objects);
-            for (var j = 0; j < objects.length; j++) {
-                var object = objects[j];
-                memberList.push(object.studentid);
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                memberList.push(object.id);
             }
             console.log(memberList);
 
-            
+            for (var j = 0; j < objects.length; j++) {
+                for (var k = 0; k < number; k++) {
+                    if (j % number == k) {
+                        var sql2 = `insert into Groups (groupid, studentid) values("${k + 1}", "${memberList[j]}");`;
+                        var objects2 = await osql.connect(sql2);
+                        console.log(objects2);
+                    }
+                }
+            }
         }
 
 

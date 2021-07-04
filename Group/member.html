@@ -12,16 +12,18 @@
         osql.requireLogin();
 
         async function registerMembers() {
-            var studentid = document.getElementById('tf1').value;
+            var id = document.getElementById('tf1').value;
             var name = document.getElementById('tf2').value;
             var nickname = document.getElementById('tf3').value;
 
-            var sql = `insert into Members (studentid, name, nickname, time) values("${studentid}", "${name}", "${nickname}", now());`;
+            var sql = `insert into Members (id, name, nickname, time) values("${id}", "${name}", "${nickname}", now());`;
             var objects = await osql.connect(sql);
             console.log(objects);
 
             document.getElementById('result').innerHTML = '参加者登録しました';
         }
+
+
     </script>
 
 </head>
