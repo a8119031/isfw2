@@ -16,12 +16,22 @@
             memberUpdate;
         });
 
+        //登録者の更新
         var memberUpdate = setInterval(doSelect, 1000);
 
+        //トピックをTopicsテーブルに挿入
+        async function registerTopic() {
+            var todayTopic = document.getElementById('topic').value;
+            var sql = `insert into Topics (topic) values("${todayTopic}");`;
+            var objects = await osql.connect(sql);
+        }
+
+        //最初に実行する処理
         async function doSelect() {
             var sql = 'select distinct * from Members order by time;';
             var objects = await osql.connect(sql);
             console.log(objects);
+            //登録者を表示
             var html = '';
             html = html + '<table border="1">';
             html = html + '<tr>';
@@ -36,37 +46,73 @@
                 html = html + '</tr>';
             }
             html = html + '</table>';
-            document.getElementById('result').innerHTML = html;
+            document.getElementById('result2').innerHTML = html;
+            //参加人数表示
             document.getElementById('count').innerHTML = objects.length + '人が参加しています';
         }
 
         var memberList = [];
 
+        //リストの中身をシャッフルする関数
+        function shuffle(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var random = Math.floor(Math.random() * (i + 1));
+                var x = array[i];
+                array[i] = array[random];
+                array[random] = x;
+            }
+        }
+
+        //何回決定ボタンを押したか数える
+        var round = 0;
+
+        //決定ボタンを押したとき
         async function decision() {
+            round = round + 1;
+            console.log(round);
             clearInterval(memberUpdate);
-            //location.href='group.html';
+            //group.htmlへ
+            //location.href = 'group.html';
+            //グループ数を取得
             var number = document.getElementById('divNumber').value;
             sessionStorage.setItem('n', number);
             var sql = 'select * from Members;';
             var objects = await osql.connect(sql);
             console.log(objects);
-            for (var i = 0; i < objects.length; i++) {
-                var object = objects[i];
-                memberList.push(object.id);
+
+            //memberListに学籍番号を入れる
+            if (round == 1) {
+                for (var i = 0; i < objects.length; i++) {
+                    var object = objects[i];
+                    memberList.push(object.id);
+                }
             }
+            //console.log(memberList);
+
+            //memberListの中身をシャッフル
+            shuffle(memberList);
             console.log(memberList);
+
 
             for (var j = 0; j < objects.length; j++) {
                 for (var k = 0; k < number; k++) {
-                    if (j % number == k) {
-                        var sql2 = `insert into Groups (groupid, studentid) values("${k + 1}", "${memberList[j]}");`;
-                        var objects2 = await osql.connect(sql2);
-                        console.log(objects2);
+                    if (round == 1) {
+                        if (j % number == k) {
+                            //Groupsテーブルに挿入
+                            var sql1 = `insert into Groups (groupid, studentid) values("${k + 1}", "${memberList[j]}");`;
+                            var objects1 = await osql.connect(sql1);
+                        }
+                    }
+                    else if (round >= 2) {
+                        if (j % number == k) {
+                            //Groupsテーブルのgroupidレコードを更新
+                            var sql2 = `update Groups set groupid = "${k + 1}" where studentid = "${memberList[j]}";`;
+                            var objects2 = await osql.connect(sql2);
+                        }
                     }
                 }
             }
         }
-
 
     </script>
 
@@ -75,7 +121,10 @@
 <body>
     <h1>参加者一覧</h1>
     <br>
-    <p id="result"></p>
+    今日のトピックを入力してください:<input id="topic" value="" type="textfield">
+    <button onclick="registerTopic()">登録</button>
+    <p id="result1"></p>
+    <p id="result2"></p>
     <p id="count"></p>
     <input id="divNumber" value="" type="textfield">グループに分けます
     <button onclick="decision()">決定</button>

@@ -16,7 +16,7 @@
         });
 
         async function displayMember() {
-            var sql = `select id, nickname from Members inner join Groups on Members.id = Groups.studentid where groupid = 2`;
+            var sql = 'select groupid, id, nickname from Members inner join Groups on Members.id = Groups.studentid order by groupid';
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
@@ -24,6 +24,7 @@
             for (var j = 0; j < objects.length; j++) {
                 var object = objects[j];
                 html = html + '<tr>';
+                html = html + '<td>' + object.groupid + '</td>';
                 html = html + '<td>' + object.id + '</td>';
                 html = html + '<td>' + object.nickname + '</td>';
                 html = html + '</tr>';
