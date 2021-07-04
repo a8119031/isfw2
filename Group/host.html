@@ -13,16 +13,13 @@
 
         $(document).ready(function () {
             doSelect();
-            memberUpdate();
+            memberUpdate;
         });
 
-        function memberUpdate() {
-            setInterval(doSelect, 1000);
-        }
-
+        var memberUpdate = setInterval(doSelect, 1000);
 
         async function doSelect() {
-            var sql = 'select * from Members;';
+            var sql = 'select * from Members order by time;';
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
@@ -41,15 +38,26 @@
             html = html + '</table>';
             document.getElementById('result').innerHTML = html;
             document.getElementById('count').innerHTML = objects.length + '人が参加しています';
-
-            //var number = document.getElementById('divnumber').value;
-            //sessionStorage.setItem('division', number);
         }
 
-        function decision(){
+        var memberList = [];
+
+        async function decision() {
             clearInterval(memberUpdate);
-            location.href='group.html';
+            //location.href='group.html';
+            var number = document.getElementById('divNumber').value;
+            var sql = 'select * from Members;';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            for (var j = 0; j < objects.length; j++) {
+                var object = objects[j];
+                memberList.push(object.studentid);
+            }
+            console.log(memberList);
+
+            
         }
+
 
     </script>
 
