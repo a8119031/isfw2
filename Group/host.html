@@ -33,7 +33,7 @@
         async function registerTopic() {
             var todayTopic = document.getElementById('topic').value;
             var sql = `insert into Topics (topic) values("${todayTopic}");`;
-            var objects = await osql.connect(sql);
+            await osql.connect(sql);
         }
 
         //最初に実行する処理
@@ -110,14 +110,14 @@
                         if (j % number == k) {
                             //Groupsテーブルに挿入
                             var sql1 = `insert into Groups (groupid, studentid) values("${k + 1}", "${memberList[j]}");`;
-                            var objects1 = await osql.connect(sql1);
+                            await osql.connect(sql1);
                         }
                     }
                     else if (round >= 2) {
                         if (j % number == k) {
                             //Groupsテーブルのgroupidレコードを更新
                             var sql2 = `update Groups set groupid = "${k + 1}" where studentid = "${memberList[j]}";`;
-                            var objects2 = await osql.connect(sql2);
+                            await osql.connect(sql2);
                         }
                     }
                 }
