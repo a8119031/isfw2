@@ -17,7 +17,7 @@
 
 
         async function execSelect() {
-            var sql = 'select * from Topics';
+            var sql = 'select * from Topics'
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
@@ -26,11 +26,11 @@
                 html = html + '<tr>';
                 var object = objects[i];
                 html = html + '<td>' + object.id + '</td>';
-                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + object.topic + '</td>';
                 html = html + '</tr>';
             }
             html = html + '</table>';
-            document.getElementById('topic').innerHTML = html;
+            document.getElementById('topic1').innerHTML = html;
         }
 
         
@@ -41,7 +41,7 @@
 
 <body>
     <h1>トピック一覧</h1>
-    <p id="topic"></p>
+    <p id="topic1"></p>
 
 </body>
 
