@@ -10,16 +10,44 @@
 
     <script>
         osql.requireLogin();
+
+        async function buttonPressed() {
+            var userid = document.getElementById('tf1').value;
+    
+            var sql = `select * from Members where id="${userid}";`;
+            var objects = await osql.connect(sql);
+            if (objects.length <= 0) {
+                document.getElementById('result').innerHTML = 'ログイン失敗：ユーザが見つかりません';
+                return;
+            }
+            if (objects[0].id != userid) {
+                document.getElementById('result').innerHTML = 'ログイン失敗：学籍番号が違います';
+                return;
+            }
+            sessionStorage.setItem('userid', objects[0].id);
+            sessionStorage.setItem('nickname', objects[0].nickname);
+
+            location.href = 'usertop.html';
+        }
+
     </script>
 
 </head>
 
 <body>
     <h1>グループ分け</h1>
-    <ul>
-        <li>主催者は<a href="host.html">こちら</a></li>
-        <li>参加者は<a href="member.html">こちら</a></li>
-    </ul>
+    <div>
+        <h2>ログイン</h2>
+        学籍番号:<input id="tf1" value="" type="textfield">
+        <br>
+        <button onclick="buttonPressed()">ログイン</button>
+    </div>
+    <hr>
+    <p><a href="member.html">新規登録</a></p>
+    <hr>
+    <p style="text-align: right"><a href="host.html">管理者ページ</a></p>
+    <p id="result"></p>
+</body>
 </body>
 
 </html>
