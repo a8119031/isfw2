@@ -14,13 +14,16 @@
         $(document).ready(function () {
             execSelect();
         });
-        async function remove(x) {
-            var sql = `delete from Topics where id = '${x}'`;
-            var objects = await osql.connect(sql);
-            console.log(objects);
-        }
-        
 
+        async function remove(topic) {
+            var ans = window.confirm('本当にいいんですね？');
+            if (ans == true) {
+                var sql = `delete from Topics where id = "${topic}"`;
+                await osql.connect(sql);
+                execSelect();
+            }
+
+        }
 
         async function execSelect() {
             var sql = 'select * from Topics'
@@ -31,7 +34,6 @@
             for (var i = 0; i < objects.length; i++) {
                 html = html + '<tr>';
                 var object = objects[i];
-                html = html + '<td>' + object.id + '</td>';
                 html = html + '<td>' + object.topic + '</td>';
                 html = html +'<td>' + `<button onclick="remove('${object.id}')">削除</button>` + '</td>';
                 html = html + '</tr>';
