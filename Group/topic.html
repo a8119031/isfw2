@@ -16,7 +16,7 @@
         });
 
         async function remove(topic) {
-            var ans = window.confirm('本当にいいんですね？');
+            var ans = window.confirm('削除していいですか？');
             if (ans == true) {
                 var sql = `delete from Topics where id = "${topic}"`;
                 await osql.connect(sql);

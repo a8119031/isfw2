@@ -36,6 +36,16 @@
             await osql.connect(sql);
         }
 
+        //削除ボタンを押したとき
+        async function remove(member) {
+            var ans = window.confirm('削除していいですか？');
+            if (ans == true) {
+                var sql = `delete from Members where id = "${member}"`;
+                await osql.connect(sql);
+                execSelect();
+            }
+        }
+
         //最初に実行する処理
         async function doSelect() {
             var sql = 'select distinct * from Members order by time;';
@@ -53,6 +63,7 @@
                 html = html + '<td>' + object.id + '</td>';
                 html = html + '<td>' + object.name + '</td>';
                 html = html + '<td>' + object.nickname + '</td>';
+                html = html + '<td>' + `<button onclick = "remove('${object.id}')">削除</button>` + '</td>';
                 html = html + '</tr>';
             }
             html = html + '</table>';
