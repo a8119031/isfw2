@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/osql.js"></script>
+
+    <script>
+        $().ready(function () {
+            execSelect();
+        });
+
+        async function execSelect() {
+            var userid = osql.getParam('userid');
+            var sql = `select * from Members where id="${userid}";`;
+            var objects = await osql.connect(sql);
+            if (objects.length <= 0) {
+                document.getElementById('result').innerHTML = 'not found';
+                return;
+            }
+
+            var user = objects[0];
+            document.getElementById('tf1').value = user.id;
+            document.getElementById('tf2').value = user.name;
+            document.getElementById('tf3').value = user.nickname;
+        }
+
+        function button2Pressed() {
+            execUpdate();
+        }
+
+        async function execUpdate() {
+            var userid = document.getElementById('tf1').value;
+            var name = document.getElementById('tf2').value;
+            var nickname = document.getElementById('tf3').value;
+
+            var sql = `update Members set name="${name}", nickname="${nickname}" where id="${userid}";`;
+            var objects = await osql.connect(sql);
+
+            document.getElementById('result').innerHTML = 'OK';
+        }
+    </script>
+
+</head>
+
+<body>
+    <h1>登録情報変更</h1>
+    学籍番号:<input id="tf1" value="" type="textfield" disabled>
+    <br>
+    名前:<input id="tf2" value="" type="textfield">
+    <br>
+    ニックネーム:<input id="tf3" value="" type="textfield">
+    <button onclick="button2Pressed()">変更</button>
+    <p id="result"></p>
+</body>
+
+</html>
+
+</head>
+
+<body>
+    <h1>ユーザトップ</h1>
+    <p id="welcome"></p>
+    <p id=change></p>
+</body>
+
+</html>

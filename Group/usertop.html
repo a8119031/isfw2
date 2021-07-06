@@ -18,8 +18,8 @@
         function selectMember() {
             var nickname = sessionStorage.getItem('nickname');
             document.getElementById('welcome').innerHTML = 'ようこそ　' + nickname + '　さん';
-            //var userid = sessionStorage.getItem('userid');
-            //document.getElementById("userchange").innerHTML = `<a href="update.html?userid=${userid}">ユーザ情報変更</a>`;
+            var userid = sessionStorage.getItem('userid');
+            document.getElementById("change").innerHTML = `<a href="update.html?userid=${userid}">ユーザ情報変更</a>`;
         }
 
     </script>
@@ -29,7 +29,7 @@
 <body>
     <h1>ユーザトップ</h1>
     <p id="welcome"></p>
-    <p id=userchange></p>
+    <p id=change></p>
 </body>
 
 </html>
