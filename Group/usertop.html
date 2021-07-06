@@ -12,12 +12,12 @@
         osql.requireLogin();
 
         $().ready(function () {
-            selectName();
+            selectMember();
         });
 
         function selectMember() {
             var nickname = sessionStorage.getItem('nickname');
-            document.getElementById('welcome').innerHTML = 'ようこそ' + nickname + 'さん';
+            document.getElementById('welcome').innerHTML = 'ようこそ　' + nickname + '　さん';
             //var userid = sessionStorage.getItem('userid');
             //document.getElementById("userchange").innerHTML = `<a href="update.html?userid=${userid}">ユーザ情報変更</a>`;
         }
