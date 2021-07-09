@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/osql.js"></script>
+
+    <script>
+        osql.requireLogin();
+
+        $(document).ready(function () {
+            topicList();
+        });
+
+        async function registerTopic() {
+            var topic = document.getElementById('tf1').value;
+
+            var sql = `insert into Topics (topic) values("${topic}");`;
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            document.getElementById('result').innerHTML = '登録しました';
+        }
+
+        async function remove(id) {
+            var ans = window.confirm('削除していいですか？');
+            if (ans == true) {
+                var sql = `delete from Topics where id = "${id}"`;
+                await osql.connect(sql);
+                topicList();
+            }
+        }
+
+        var topicUpdate = setInterval(topicList, 1000);
+
+        async function topicList() {
+            var sql = 'select * from Topics;';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1">';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<tr>';
+                html = html + '<td>' + object.topic + '</td>';
+                html = html + '<td>' + `<button onclick="remove('${object.id}')">削除</button>` + '</td>';
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('topiclist').innerHTML = html;
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <h1>登録</h1>
+    トピック:<input id="tf1" value="" type="textfield">
+    <button onclick="registerTopic()">登録</button>
+    <br>
+    <p id="result"></p>
+    <hr>
+    <p id="topiclist"></p>
+
+</body>
+
+</html>
