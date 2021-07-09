@@ -12,11 +12,12 @@
         osql.requireLogin();
 
         $(document).ready(function () {
-            
+            buttonPressed();
         });
 
         async function buttonPressed() {
             var userid = document.getElementById('tf1').value;
+
             var sql = `select * from Members where id="${userid}";`;
             var objects = await osql.connect(sql);
             if (objects.length <= 0) {
@@ -26,9 +27,8 @@
 
             sessionStorage.setItem('userid', objects[0].id);
             sessionStorage.setItem('nickname', objects[0].nickname);
-            location.href = 'usertop.html';
+            location.href = 'join.html';
         }
-
     </script>
 
 </head>
@@ -40,6 +40,7 @@
         学籍番号:<input id="tf1" value="" type="textfield">
         <br>
         <button onclick="buttonPressed()">ログイン</button>
+        <p id="result"></p>
     </div>
     <hr>
     <h2>はじめての方</h2>
