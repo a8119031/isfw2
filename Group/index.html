@@ -11,6 +11,10 @@
     <script>
         osql.requireLogin();
 
+        $(document).ready(function () {
+            
+        });
+
         async function buttonPressed() {
             var userid = document.getElementById('tf1').value;
             var sql = `select * from Members where id="${userid}";`;

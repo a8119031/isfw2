@@ -22,7 +22,7 @@
         var memberUpdate = setInterval(doSelect, 1000);
 
         //Groupsテーブルの中身を空にする(テーブル削除→テーブル作成)
-        async function clearTables(){
+        async function clearTables(tablename){
             var sql = 'drop table Groups;';
             await osql.connect(sql);
             var sql2 = 'create table Groups (groupid int(11), studentid varchar(8));';
