@@ -13,6 +13,7 @@
 
         $().ready(function () {
             selectMember();
+            additional();
         });
 
         function selectMember() {
@@ -23,6 +24,22 @@
         
         }
 
+        function additional(){
+            var topic = document.getElementById('topic1').value;
+            var sql = `select * from Topics where id="${topic}";`;
+            var objects = await osql.connect(sql);
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<tr>';
+                html = html + '<td>' + object.topic + '</td>';
+                html = html + '<td>' + `<button onclick="remove('${object.id}')">${object.name}</button>` + '</td>';
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('topiclist').innerHTML = html;
+
+        }
+
     </script>
 
 </head>
@@ -30,7 +47,8 @@
 <body>
     <h1>ユーザトップ</h1>
     <p id="welcome"></p>
-    <p id=change></p>
+    <p id='change'></p>
+    <p id='topiclist'></p>
 </body>
 
 </html>
