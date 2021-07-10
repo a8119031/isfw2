@@ -15,6 +15,7 @@
             topicList();
         });
 
+        //トピック登録
         async function registerTopic() {
             var topic = document.getElementById('tf1').value;
 
@@ -22,8 +23,10 @@
             var objects = await osql.connect(sql);
             console.log(objects);
             document.getElementById('result').innerHTML = '登録しました';
+            topicList();
         }
 
+        //削除ボタンを押したとき
         async function remove(id) {
             var ans = window.confirm('削除していいですか？');
             if (ans == true) {
@@ -33,8 +36,7 @@
             }
         }
 
-        var topicUpdate = setInterval(topicList, 1000);
-
+        //トピック表示
         async function topicList() {
             var sql = 'select * from Topics;';
             var objects = await osql.connect(sql);

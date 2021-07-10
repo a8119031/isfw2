@@ -16,15 +16,20 @@
             topicMember()
         });
 
+        //トピック表示
         async function selectTopic() {
             var topic = osql.getParam('topic');
             document.getElementById('page').innerHTML = topic;
 
         }
 
+        //トピック参加者表示の更新(1秒ごと)
+        var memberUpdate = setInterval(topicMember, 1000);
+
+        //参加者表示
         async function topicMember() {
             var id = osql.getParam('id');
-            console.log(id);
+            //console.log(id);
             var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid = ${id};`;
             var objects = await osql.connect(sql);
             console.log(objects);
@@ -43,8 +48,61 @@
                 html = html + '</tr>';
             }
             document.getElementById('members').innerHTML = html;
+
+            //参加人数表示
+            document.getElementById('count').innerHTML = objects.length + '人が参加しています';
         }
 
+        var memberList = [];
+
+        //リストの中身をシャッフルする関数
+        function shuffle(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var random = Math.floor(Math.random() * (i + 1));
+                var x = array[i];
+                array[i] = array[random];
+                array[random] = x;
+            }
+        }
+
+        //決定ボタンを押したとき
+        async function decision() {
+            clearInterval(memberUpdate);
+            //group.htmlへ
+            //location.href = 'group.html';
+
+            //グループ数を取得
+            var number = document.getElementById('divNumber').value;
+
+            //トピック参加者を抽出
+            var id = osql.getParam('id');
+            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid = ${id};`;
+            var objects = await osql.connect(sql);
+            console.log(objects);
+
+            //memberListに学籍番号を入れる
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                memberList.push(object.id);
+            }
+            console.log(memberList);
+
+            //memberListの中身をシャッフル
+            shuffle(memberList);
+            console.log(memberList);
+
+
+            for (var j = 0; j < objects.length; j++) {
+                for (var k = 0; k < number; k++) {
+                    if (j % number == k) {
+                        //Topic_Memberテーブルのstatusレコードを更新
+                        var sql2 = `update Topic_Member set status = "${k + 1}", assigned_at = now() 
+                                    where topicid = ${id} and memberid = "${memberList[j]}";`;
+                        await osql.connect(sql2);
+                    }
+                }
+            }
+        }
 
 
     </script>
@@ -55,7 +113,10 @@
     <h1 id="page"></h1>
     <div>
         <p id='members'></p>
+        <p id='count'></p>
     </div>
+    <input id="divNumber" value="" type="textfield">グループに分けます
+    <button onclick="decision()">決定</button>
 </body>
 
 </html>
