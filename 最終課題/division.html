@@ -13,12 +13,36 @@
 
         $().ready(function () {
             selectTopic();
+            topicMember()
         });
 
         async function selectTopic() {
             var topic = osql.getParam('topic');
             document.getElementById('page').innerHTML = topic;
-        
+
+        }
+
+        async function topicMember() {
+            var id = osql.getParam('id');
+            console.log(id);
+            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid = ${id};`;
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1">';
+            html = html + '<tr>';
+            html = html + '<th>学籍番号</th><th>名前</th><th>ニックネーム</th><th>参加時間</th>';
+            html = html + '</tr>';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<tr>';
+                html = html + '<td>' + object.memberid + '</td>';
+                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + object.nickname + '</td>';
+                html = html + '<td>' + object.created_at + '</td>';
+                html = html + '</tr>';
+            }
+            document.getElementById('members').innerHTML = html;
         }
 
 
@@ -28,11 +52,9 @@
 </head>
 
 <body>
-    <h1 id ="page"></h1>
-    <p id="welcome"></p>
-    <p id='change'></p>
-    <div >
-    <p id='list'></p>
+    <h1 id="page"></h1>
+    <div>
+        <p id='members'></p>
     </div>
 </body>
 

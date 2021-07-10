@@ -10,6 +10,24 @@
 
     <script>
         osql.requireLogin();
+
+        $(document).ready(function () {
+            topicJoin();
+        });
+
+        async function topicJoin() {
+            var sql = 'select * from Topics;';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + `<a href = "division.html?id=${object.id}&topic=${object.topic}">${object.topic}</a>` 
+                html = html + '<br>'
+            }
+            document.getElementById('topiclist').innerHTML = html;
+        }
+
     </script>
 
 </head>
@@ -18,7 +36,9 @@
     <h1>トピック</h1>
     <br>
     <a href="topicregister.html">新しいトピックを登録をする</a>
-    <p id="group"></p>
+    <br>
+    <hr>
+    <p id="topiclist"></p>
 
 </body>
 

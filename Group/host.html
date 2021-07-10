@@ -48,15 +48,12 @@
 
         //最初に実行する処理
         async function doSelect() {
-            var sql = 'select distinct * from Members order by time;';
+            var sql = 'select distinct * from Topics order by time;';
             var objects = await osql.connect(sql);
             console.log(objects);
             //登録者を表示
             var html = '';
             html = html + '<table border="1">';
-            html = html + '<tr>';
-            html = html + '<th>学籍番号</th><th>名前</th><th>ニックネーム</th>';
-            html = html + '</tr>'
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
                 html = html + '<tr>';
