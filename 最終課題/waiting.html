@@ -24,8 +24,7 @@
 
         async function participant() {
             var id = osql.getParam('id');
-            console.log(id);
-            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid ="{id}"`;
+            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid ='${id}'`;
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
