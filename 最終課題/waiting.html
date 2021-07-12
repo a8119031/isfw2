@@ -23,7 +23,9 @@
         }
 
         async function participant() {
-            var sql = "select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid ";
+            var id = osql.getParam('id');
+            console.log(id);
+            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid ="{id}"`;
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
@@ -42,7 +44,7 @@
             }
             html = html + '</table>';
             document.getElementById('attend').innerHTML = html;
-            document.getElementById('count').innerHTML = '現在'+ objects.length + '人が参加しています。';
+            document.getElementById('count').innerHTML = '現在、このトピックには'+ objects.length + '人が参加しています。';
         }
 
         
