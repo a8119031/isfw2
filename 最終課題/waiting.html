@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/osql.js"></script>
+
+    <script>
+        osql.requireLogin();
+
+        $().ready(function () {
+            selectTopic();
+            participant();
+        });
+
+        //トピック表示
+        async function selectTopic() {
+            var topic = osql.getParam('topic');
+            document.getElementById('page').innerHTML = topic;
+
+        }
+
+        async function participant() {
+            var sql = "select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid ";
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1">';
+            html = html + '<tr>';
+            html = html + '<th>学籍番号</th><th>名前</th><th>ニックネーム</th><th>参加時間</th>';
+            html = html + '</tr>';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<tr>';
+                html = html + '<td>' + object.memberid + '</td>';
+                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + object.nickname + '</td>';
+                html = html + '<td>' + object.created_at + '</td>';
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('attend').innerHTML = html;
+            document.getElementById('count').innerHTML = '現在'+ objects.length + '人が参加しています。';
+        }
+
+        
+
+
+    </script>
+
+</head>
+
+<body>
+    <h1 id="page"></h1>
+    <p>グループ分けの結果は<a href="decide.html">こちら</a>から</p>
+    <div>
+        <p id='attend'></p>
+        <p id='count'></p>
+    </div>
+    
+    
+</body>
+
+</html>
