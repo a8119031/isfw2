@@ -70,10 +70,6 @@
         async function check() {
             var sql = `select * from Topic_Member where memberid= '${memberid}' and  topicid = ${topicid}`;
             var objects = await osql.connect(sql);
-            if (objects[0].status == '未') {
-                println('しばらくお待ちください。')
-            }
-
             if (objects[0].status!= '未') {
                 location.href = 'decide.html'
             }
@@ -87,6 +83,7 @@
 
 <body>
     <h1 id="page"></h1>
+    <h2>しばらくお待ちください。</h2>
     <div>
         <p id='attend'></p>
         <p id='count'></p>
