@@ -14,15 +14,17 @@
             participant();
             seeMember()
         });
+        
 
         var topicid = osql.getParam('topicid');
-       
+        var memberid = osql.getParam('memberid');
+
         async function participant() {
             //トピック表示
             var topic = osql.getParam('topic');
             document.getElementById('page').innerHTML = topic;
 
-            var memberid = osql.getParam('memberid');
+            
             console.log(topicid);
             console.log(memberid);
 
@@ -40,14 +42,6 @@
             return objects;
         }
 
-        while(true){
-            roop();
-            console.log(2,objects);
-            if (objects[0].status != '未') {
-                location.href = 'decide.html';
-                break;
-            }
-        }
         
         async function seeMember() {
             var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}'and status = "未"`  ;
@@ -71,6 +65,18 @@
             document.getElementById('count').innerHTML = '現在、このトピックには' + objects.length + '人が参加しています。';
 
         }
+        setInterval(check,2000);
+
+        async function check(){
+            var sql = `select * from Topic_Member where memberid= '${memberid}' and  topicid = ${topicid}`;           
+            var objects = await osql.connect(sql);
+            console.log(objects[0].status);
+            if(objects[0]!='未'){
+                location.href = 'decide.html'
+            }
+
+        }
+        
 
     </script>
 
