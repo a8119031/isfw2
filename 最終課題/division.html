@@ -11,22 +11,18 @@
         osql.requireLogin();
 
         $().ready(function () {
-            selectTopic();
             topicMember()
         });
-
-        //トピック表示
-        async function selectTopic() {
-            var topic = osql.getParam('topic');
-            document.getElementById('page').innerHTML = topic;
-
-        }
 
         //トピック参加者表示の更新(1秒ごと)
         var memberUpdate = setInterval(topicMember, 1000);
 
-        //参加者表示
+        //トピックと参加者表示
         async function topicMember() {
+            //トピック表示
+            var topic = osql.getParam('topic');
+            document.getElementById('page').innerHTML = topic;
+
             var id = osql.getParam('id');
             //console.log(id);
             var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid = ${id};`;
