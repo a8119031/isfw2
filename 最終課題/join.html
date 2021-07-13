@@ -34,11 +34,13 @@
                 html = html + `<a href = 'waiting.html?topic=${object.topic}'>${object.topic}</a>` 
                 html = html + '<br>'
             }
+            sessionStorage.setItem('topicid', objects[0].topicid);
             document.getElementById('list').innerHTML = html;
            
             
         }
-        async 
+        
+        
 
     </script>
 
