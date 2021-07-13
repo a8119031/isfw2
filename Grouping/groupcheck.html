@@ -21,25 +21,21 @@
             console.log(topicid);
             var memberid = osql.getParam('memberid');
             console.log(memberid);
-            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}' and memberid = '${memberid}'`;
+
+            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}'`;
             var objects = await osql.connect(sql);
             console.log(objects);
-            var thisstatus = objects[0].status;
-            document.getElementById('result').innerHTML = `あなたは　グループ${thisstatus}　です`;
-
-            var sql2 = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid = ${topicid} and status = ${thisstatus}`;
-            var objects2 = await osql.connect(sql2);
-            console.log(objects2);
 
             var html = '';
             html = html + '<table border="1">';
             html = html + '<tr>';
-            html = html + '<th>グループ</th><th>名前</th><th>ニックネーム</th>';
+            html = html + '<th>グループ</th><th>学籍番号</th><th>名前</th><th>ニックネーム</th>';
             html = html + '</tr>';
-            for (var i = 0; i < objects2.length; i++) {
+            for (var i = 0; i < objects.length; i++) {
                 var object = objects2[i];
                 html = html + '<tr>';
                 html = html + '<td>' + object.status + '</td>';
+                html = html + '<td>' + object.studentid + '</td>';
                 html = html + '<td>' + object.name + '</td>';
                 html = html + '<td>' + object.nickname + '</td>';
                 html = html + '</tr>';

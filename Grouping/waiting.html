@@ -15,15 +15,15 @@
             seeMember();
         });
 
-
         var topicid = osql.getParam('topicid');
         var memberid = osql.getParam('memberid');
+
+        var memberUpdate = setInterval(seeMember, 1000);
 
         async function participant() {
             //トピック表示
             var topic = osql.getParam('topic');
             document.getElementById('page').innerHTML = topic;
-
 
             console.log(topicid);
             console.log(memberid);
@@ -31,7 +31,6 @@
             var sql = `insert into Topic_Member (topicid,memberid,status,created_at) values("${topicid}", "${memberid}", '未',now())`;
             var objects = await osql.connect(sql);
             console.log(objects);
-
         }
 
         //var objects;
@@ -65,7 +64,8 @@
             document.getElementById('count').innerHTML = '現在、このトピックには' + objects.length + '人が参加しています。';
 
         }
-        setInterval(check, 2000);
+
+        var statusCheck = setInterval(check, 2000);
 
         async function check() {
             var sql = `select * from Topic_Member where memberid= '${memberid}' and  topicid = ${topicid}`;
