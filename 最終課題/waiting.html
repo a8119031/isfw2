@@ -70,8 +70,7 @@
         async function check() {
             var sql = `select * from Topic_Member where memberid= '${memberid}' and  topicid = ${topicid}`;
             var objects = await osql.connect(sql);
-            console.log(objects[0].status);
-            if (objects[0] != '未') {
+            if (objects[0].status!= '未') {
                 location.href = 'decide.html'
             }
 

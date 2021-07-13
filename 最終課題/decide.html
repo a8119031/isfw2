@@ -14,6 +14,7 @@
         $().ready(function () {
             decideGroup()
         });
+        
 
         async function decideGroup() {
             var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}'`;
