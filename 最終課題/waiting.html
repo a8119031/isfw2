@@ -30,15 +30,23 @@
 
         }
 
+        //var objects;
         async function roop() {
             var sql = `select * from Topic_Member where topicid = "${topicid}" and memberid = "${memberid}" and status = "未"`;
             var objects = await osql.connect(sql);
-            console.log(objects);
-            if (objects[0].status != '未') {
-                location.href = 'decide.html';
-            }
+            console.log(1,objects);
+            return objects;
         }
 
+        while(true){
+            roop();
+            console.log(2,objects);
+            if (objects[0].status != '未') {
+                location.href = 'decide.html';
+                break;
+            }
+        }
+        
         async function seeMember() {
             var sql = 'select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid';
             var objects = await osql.connect(sql);
