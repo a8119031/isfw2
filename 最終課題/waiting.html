@@ -11,18 +11,14 @@
         osql.requireLogin();
 
         $().ready(function () {
-            selectTopic();
             participant();
         });
 
-        //トピック表示
-        async function selectTopic() {
+        async function participant() {
+            //トピック表示
             var topic = osql.getParam('topic');
             document.getElementById('page').innerHTML = topic;
 
-        }
-
-        async function participant() {
             var topicid = osql.getParam('topicid');
             var memberid = osql.getParam('memberid');
             console.log(topicid);
