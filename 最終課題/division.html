@@ -71,7 +71,7 @@
 
             //トピック参加者を抽出
             var id = osql.getParam('id');
-            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid = ${id};`;
+            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid = ${id} and status = '未';`;
             var objects = await osql.connect(sql);
             console.log(objects);
 
