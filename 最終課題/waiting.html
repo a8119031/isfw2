@@ -23,8 +23,10 @@
         }
 
         async function participant() {
-            var id = osql.getParam('id');
-            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid ='${id}'`;
+            var topicid = osql.getParam('topicid');
+            var memberid = osql.getParam('memberid');
+            
+            var sql = `insert into Topic_Member (topicid,memberid,status,created_at) values("${topicid}", "${memberid}", '未',now())`;
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
