@@ -46,7 +46,7 @@
         }
 
         async function seeMember() {
-            var sql = 'select * from ';
+            var sql = 'select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid';
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
