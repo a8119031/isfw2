@@ -71,7 +71,7 @@
             var sql = `select * from Topic_Member where memberid= '${memberid}' and  topicid = ${topicid}`;
             var objects = await osql.connect(sql);
             if (objects[0].status!= '未') {
-                location.href = 'decide.html'
+                location.href = `decide.html?topicid="${topicid}"&memberid="${memberid}"`;
             }
 
         }
