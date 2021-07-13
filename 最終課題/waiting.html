@@ -14,7 +14,7 @@
             participant();
             seeMember()
         });
-        
+
 
         var topicid = osql.getParam('topicid');
         var memberid = osql.getParam('memberid');
@@ -24,7 +24,7 @@
             var topic = osql.getParam('topic');
             document.getElementById('page').innerHTML = topic;
 
-            
+
             console.log(topicid);
             console.log(memberid);
 
@@ -38,13 +38,13 @@
         async function roop() {
             var sql = `select * from Topic_Member where topicid = "${topicid}" and memberid = "${memberid}" and status = "未"`;
             var objects = await osql.connect(sql);
-            console.log(1,objects);
+            console.log(1, objects);
             return objects;
         }
 
-        
+
         async function seeMember() {
-            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}'and status = "未"`  ;
+            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}'and status = "未"`;
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
@@ -65,18 +65,17 @@
             document.getElementById('count').innerHTML = '現在、このトピックには' + objects.length + '人が参加しています。';
 
         }
-        setInterval(check,2000);
+        setInterval(check, 2000);
 
-        async function check(){
-            var sql = `select * from Topic_Member where memberid= '${memberid}' and  topicid = ${topicid}`;           
+        async function check() {
+            var sql = `select * from Topic_Member where memberid= '${memberid}' and  topicid = ${topicid}`;
             var objects = await osql.connect(sql);
-            console.log(objects[0].status);
-            if(objects[0]!='未'){
+            if (objects[0].status!= '未') {
                 location.href = 'decide.html'
             }
 
         }
-        
+
 
     </script>
 
