@@ -63,8 +63,6 @@
         //決定ボタンを押したとき
         async function decision() {
             clearInterval(memberUpdate);
-            //group.htmlへ
-            //location.href = 'group.html';
 
             //グループ数を取得
             var number = document.getElementById('divNumber').value;
@@ -97,6 +95,8 @@
                     }
                 }
             }
+
+            location.href = 'decide.html';
         }
 
 
