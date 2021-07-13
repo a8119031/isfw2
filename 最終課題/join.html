@@ -16,8 +16,9 @@
             additional();
         });
 
+        var userid = sessionStorage.getItem('userid');
+
         async function selectMember() {
-            var userid = sessionStorage.getItem('userid');
             var nickname = sessionStorage.getItem('nickname');
             document.getElementById('welcome').innerHTML = 'ようこそ　' + nickname + '　さん';
             document.getElementById("change").innerHTML = `<a href="register.html?userid=${userid}">ユーザ情報変更</a>`;
@@ -31,10 +32,10 @@
             for (var i = 0; i < objects.length; i++) {
                 console.log(objects)
                 var object = objects[i];
-                html = html + `<a href = 'waiting.html?topic=${object.topic}'>${object.topic}</a>` 
-                html = html + '<br>'
+                html = html + `<a href = 'waiting.html?topicid=${object.id}&memberid=${userid}'>${object.topic}</a>` ;
+                html = html + '<br>';
             }
-            sessionStorage.setItem('topicid', objects[0].topicid);
+            //sessionStorage.setItem('topicid', objects[0].topicid);
             document.getElementById('list').innerHTML = html;
         }
         
