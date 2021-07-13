@@ -32,7 +32,7 @@
             for (var i = 0; i < objects.length; i++) {
                 console.log(objects)
                 var object = objects[i];
-                html = html + `<a href = 'waiting.html?topicid=${object.id}&memberid=${object.userid}&topic=${object.topic}'>${object.topic}</a>` ;
+                html = html + `<a href = 'waiting.html?topicid=${object.id}&memberid=${userid}&topic=${object.topic}'>${object.topic}</a>` ;
                 html = html + '<br>';
             }
             //sessionStorage.setItem('topicid', objects[0].topicid);

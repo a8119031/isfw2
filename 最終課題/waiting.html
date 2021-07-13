@@ -25,7 +25,6 @@
         async function participant() {
             var topicid = osql.getParam('topicid');
             var memberid = osql.getParam('memberid');
-            
             var sql = `insert into Topic_Member (topicid,memberid,status,created_at) values("${topicid}", "${memberid}", '未',now())`;
             var objects = await osql.connect(sql);
             console.log(objects);
