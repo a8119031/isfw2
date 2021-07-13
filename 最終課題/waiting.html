@@ -25,30 +25,32 @@
         async function participant() {
             var topicid = osql.getParam('topicid');
             var memberid = osql.getParam('memberid');
-            
+            console.log(topicid);
+            console.log(memberid);
+
             var sql = `insert into Topic_Member (topicid,memberid,status,created_at) values("${topicid}", "${memberid}", '未',now())`;
             var objects = await osql.connect(sql);
             console.log(objects);
-            var html = '';
-            html = html + '<table border="1">';
-            html = html + '<tr>';
-            html = html + '<th>学籍番号</th><th>名前</th><th>ニックネーム</th><th>参加時間</th>';
-            html = html + '</tr>';
-            for (var i = 0; i < objects.length; i++) {
-                var object = objects[i];
-                html = html + '<tr>';
-                html = html + '<td>' + object.memberid + '</td>';
-                html = html + '<td>' + object.name + '</td>';
-                html = html + '<td>' + object.nickname + '</td>';
-                html = html + '<td>' + object.created_at + '</td>';
-                html = html + '</tr>';
-            }
-            html = html + '</table>';
-            document.getElementById('attend').innerHTML = html;
-            document.getElementById('count').innerHTML = '現在、このトピックには'+ objects.length + '人が参加しています。';
+            //var html = '';
+            //html = html + '<table border="1">';
+            //html = html + '<tr>';
+            //html = html + '<th>学籍番号</th><th>名前</th><th>ニックネーム</th><th>参加時間</th>';
+            //html = html + '</tr>';
+            //for (var i = 0; i < objects.length; i++) {
+                //var object = objects[i];
+                //html = html + '<tr>';
+                //html = html + '<td>' + object.memberid + '</td>';
+                //html = html + '<td>' + object.name + '</td>';
+                //html = html + '<td>' + object.nickname + '</td>';
+                //html = html + '<td>' + object.created_at + '</td>';
+                //html = html + '</tr>';
+            //}
+            //html = html + '</table>';
+            //document.getElementById('attend').innerHTML = html;
+            //document.getElementById('count').innerHTML = '現在、このトピックには' + objects.length + '人が参加しています。';
         }
 
-        
+
 
 
     </script>
@@ -62,8 +64,8 @@
         <p id='attend'></p>
         <p id='count'></p>
     </div>
-    
-    
+
+
 </body>
 
 </html>
