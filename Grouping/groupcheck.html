@@ -13,13 +13,14 @@
 
         $().ready(function () {
             decideGroup()
+            wordlist()
         });
 
 
+        var topicid = osql.getParam('topicid');
+        console.log(topicid);
+
         async function decideGroup() {
-            var topicid = osql.getParam('topicid');
-            console.log(topicid);
-            
             var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}' order by status`;
             var objects = await osql.connect(sql);
             console.log(objects);
@@ -41,6 +42,42 @@
             html = html + '</table>';
             document.getElementById('attend').innerHTML = html;
         }
+
+        var wordUpdate = setInterval(wordlist, 2000);
+
+        async function wordlist() {
+            //トピック名表示
+            var sql = `select * from Topics where id = ${topicid}`;
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            document.getElementById('word').innerHTML = objects[0].topic;
+
+            //グループと学籍番号と名前とワードを取り出す
+            var sql2 = `select status, X.memberid, name, word from Topic_Member inner join 
+                       (select * from Members inner join Words on Members.id = Words.memberid) as X 
+                        on Topic_Member.memberid = X.id  where X.topicid = ${topicid} order by status`;
+            var objects2 = await osql.connect(sql2);
+            console.log(objects2);
+
+            var html = '';
+            html = html + '<table border="1">';
+            html = html + '<tr>';
+            html = html + '<th>グループ</th><th>学籍番号</th><th>名前</th><th>入力ワード</th>';
+            html = html + '</tr>';
+            for (var i = 0; i < objects2.length; i++) {
+                var object = objects2[i];
+                html = html + '<tr>';
+                html = html + '<td>' + object.status + '</td>';
+                html = html + '<td>' + object.memberid + '</td>';
+                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + object.word + '</td>';
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('wordlist').innerHTML = html;
+        }
+
+
     </script>
 
 </head>
@@ -49,7 +86,9 @@
     <h1>グループ分け結果</h1>
     <h2 id="result"></h2>
     <p id="attend"></p>
-
+    <hr>
+    <h1 id="word"></h1>
+    <p id="wordlist"></p>
 </body>
 
 </html>
