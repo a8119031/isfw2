@@ -25,7 +25,8 @@
             var objects = await osql.connect(sql);
             console.log(objects);
             var thisstatus = objects[0].status;
-            document.getElementById('result').innerHTML = `あなたは　グループ${thisstatus}　です`;
+            var membername = objects[0].nickname;
+            document.getElementById('result').innerHTML = `${membername}さんは　グループ${thisstatus}　です`;
 
             var sql2 = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid = ${topicid} and status = ${thisstatus}`;
             var objects2 = await osql.connect(sql2);
