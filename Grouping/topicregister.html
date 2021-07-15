@@ -30,7 +30,7 @@
         async function remove(id) {
             var ans = window.confirm('削除していいですか？');
             if (ans == true) {
-                var sql = `delete from Topics where id = "${id}"`;
+                var sql = `delete from Topics where id = "${id};"`;
                 await osql.connect(sql);
                 topicList();
             }

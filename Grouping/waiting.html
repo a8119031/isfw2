@@ -28,22 +28,13 @@
             console.log(topicid);
             console.log(memberid);
 
-            var sql = `insert into Topic_Member (topicid,memberid,status,created_at) values("${topicid}", "${memberid}", '未',now())`;
+            var sql = `insert into Topic_Member (topicid,memberid,status,created_at) values("${topicid}", "${memberid}", '未',now());`;
             var objects = await osql.connect(sql);
             console.log(objects);
         }
 
-        //var objects;
-        async function roop() {
-            var sql = `select * from Topic_Member where topicid = "${topicid}" and memberid = "${memberid}" and status = "未"`;
-            var objects = await osql.connect(sql);
-            console.log(1, objects);
-            return objects;
-        }
-
-
         async function seeMember() {
-            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}'and status = "未"`;
+            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}'and status = "未";`;
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
@@ -68,7 +59,7 @@
         var statusCheck = setInterval(check, 2000);
 
         async function check() {
-            var sql = `select * from Topic_Member where memberid= '${memberid}' and  topicid = ${topicid}`;
+            var sql = `select * from Topic_Member where memberid= '${memberid}' and  topicid = ${topicid};`;
             var objects = await osql.connect(sql);
             if (objects[0].status!= '未') {
                 location.href = `decide.html?topicid=${topicid}&memberid=${memberid}`;

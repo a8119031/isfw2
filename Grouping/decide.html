@@ -22,14 +22,14 @@
         console.log(memberid);
 
         async function decideGroup() {
-            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}' and memberid = '${memberid}'`;
+            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}' and memberid = '${memberid};'`;
             var objects = await osql.connect(sql);
             console.log(objects);
             var thisstatus = objects[0].status;
             var membername = objects[0].nickname;
             document.getElementById('result').innerHTML = `${membername}さんは　グループ${thisstatus}　です`;
 
-            var sql2 = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid = ${topicid} and status = ${thisstatus}`;
+            var sql2 = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id where topicid = ${topicid} and status = ${thisstatus};`;
             var objects2 = await osql.connect(sql2);
             console.log(objects2);
 
@@ -54,7 +54,7 @@
         async function registerWord() {
             var word = document.getElementById('tf1').value;
             console.log(word);
-            var sql = `insert into Words (topicid, memberid, word) values("${topicid}", "${memberid}", "${word}")`;
+            var sql = `insert into Words (topicid, memberid, word) values("${topicid}", "${memberid}", "${word}");`;
             var objects = await osql.connect(sql);
             document.getElementById('result2').innerHTML = '登録しました';
         }
