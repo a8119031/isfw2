@@ -16,11 +16,12 @@
         });
 
 
+        var topicid = osql.getParam('topicid');
+        console.log(topicid);
+        var memberid = osql.getParam('memberid');
+        console.log(memberid);
+
         async function decideGroup() {
-            var topicid = osql.getParam('topicid');
-            console.log(topicid);
-            var memberid = osql.getParam('memberid');
-            console.log(memberid);
             var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}' and memberid = '${memberid}'`;
             var objects = await osql.connect(sql);
             console.log(objects);
@@ -48,6 +49,30 @@
             html = html + '</table>';
             document.getElementById('attend').innerHTML = html;
         }
+
+        //ワードの登録
+        async function registerWord() {
+            var word = document.getElementById('tf1').value;
+            console.log(word);
+            var sql = `insert into Words (topicid, memberid, word) values("${topicid}", "${memberid}", "${word}")`;
+            var objects = await osql.connect(sql);
+            document.getElementById('result2').innerHTML = '登録しました';
+        }
+
+        //ワードの取り出し
+        async function selectWord() {
+            var sql = `select * from Words where topicid = ${topicid};`;
+            var objects = await osql.connect(sql);
+            //ワードをリストに入れる
+            var wordlist = [];
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                wordlist.push(object.word);
+            }
+            var random = Math.floor(Math.random()* objects.length);
+            document.getElementById('select').innerHTML = wordlist[random];
+        }
+
     </script>
 
 </head>
@@ -56,7 +81,13 @@
     <h1>グループ分け結果</h1>
     <h2 id="result"></h2>
     <p id="attend"></p>
-
+    <hr>
+    ワード:<input id="tf1" value="" type="textfield">
+    <button onclick="registerWord()">登録</button>
+    <p id="result2"></p>
+    <hr>
+    <button onclick="selectWord()">ワードを取り出す</button>
+    <p id="select"></p>
 </body>
 
 </html>
