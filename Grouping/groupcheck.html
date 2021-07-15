@@ -55,7 +55,7 @@
             //グループと学籍番号と名前とワードを取り出す
             var sql2 = `select status, X.memberid, name, word from Topic_Member inner join 
                        (select * from Members inner join Words on Members.id = Words.memberid) as X 
-                        on Topic_Member.memberid = X.id  where X.topicid = ${topicid} order by status`;
+                        on Topic_Member.memberid = X.id  where X.topicid = ${topicid} and not status = '未' order by status`;
             var objects2 = await osql.connect(sql2);
             console.log(objects2);
 
