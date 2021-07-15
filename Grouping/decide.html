@@ -22,7 +22,7 @@
         console.log(memberid);
 
         async function decideGroup() {
-            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}' and memberid = '${memberid};'`;
+            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}' and memberid = '${memberid}';`;
             var objects = await osql.connect(sql);
             console.log(objects);
             var thisstatus = objects[0].status;
