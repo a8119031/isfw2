@@ -74,6 +74,12 @@
             document.getElementById('select').innerHTML = wordlist[random];
         }
 
+        function back(){
+            location.href = 'join.html'
+        }
+
+    
+
     </script>
 
 </head>
@@ -89,6 +95,8 @@
     <hr>
     <button onclick="selectWord()">ワードを取り出す</button>
     <p id="select"></p>
+    <button onclick="back()">ユーザートップに戻る</button>
+ 
 </body>
 
 </html>
