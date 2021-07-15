@@ -19,9 +19,7 @@
         async function decideGroup() {
             var topicid = osql.getParam('topicid');
             console.log(topicid);
-            var memberid = osql.getParam('memberid');
-            console.log(memberid);
-
+            
             var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}'`;
             var objects = await osql.connect(sql);
             console.log(objects);
