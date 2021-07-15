@@ -20,7 +20,7 @@
             var topicid = osql.getParam('topicid');
             console.log(topicid);
             
-            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}'`;
+            var sql = `select * from Topic_Member inner join Members on Topic_Member.memberid = Members.id  where topicid = '${topicid}' order by topicid`;
             var objects = await osql.connect(sql);
             console.log(objects);
 
@@ -30,10 +30,10 @@
             html = html + '<th>グループ</th><th>学籍番号</th><th>名前</th><th>ニックネーム</th>';
             html = html + '</tr>';
             for (var i = 0; i < objects.length; i++) {
-                var object = objects2[i];
+                var object = objects[i];
                 html = html + '<tr>';
                 html = html + '<td>' + object.status + '</td>';
-                html = html + '<td>' + object.studentid + '</td>';
+                html = html + '<td>' + object.memberid + '</td>';
                 html = html + '<td>' + object.name + '</td>';
                 html = html + '<td>' + object.nickname + '</td>';
                 html = html + '</tr>';
