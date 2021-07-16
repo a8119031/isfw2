@@ -16,7 +16,7 @@
         });
 
         var memberid = sessionStorage.getItem('memberid');
-        
+
         async function buttonPressed() {
             var name = document.getElementById('tf2').value;
             var nickname = document.getElementById('tf3').value;
@@ -24,7 +24,7 @@
             var sql = `update Members set name="${name}", nickname="${nickname}", time = now() where id="${memberid}";`;
             var objects = await osql.connect(sql);
 
-            document.getElementById('result').innerHTML = '変更しました';
+            location.href = "login.html";;
         }
 
         function doSelect() {

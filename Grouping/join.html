@@ -19,7 +19,7 @@
         var memberid = sessionStorage.getItem('memberid');
 
         async function selectMember() {
-            var nickname = sessionStorage.getItem('nickname');
+            var nickname = osql.getParam('nickname');
             document.getElementById('welcome').innerHTML = 'ようこそ　' + nickname + '　さん';
             document.getElementById("change").innerHTML = `<a href="update.html?userid=${memberid}">ユーザ情報変更</a>`;
 
