@@ -18,7 +18,7 @@
 
         var topicid = osql.getParam('topicid');
         console.log(topicid);
-        var memberid = osql.getParam('memberid');
+        var memberid = sessionStorage.getItem('memberid');
         console.log(memberid);
 
         async function decideGroup() {

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/osql.js"></script>
+
+    <script>
+        osql.requireLogin();
+
+        $(document).ready(function () {
+            doSelect();
+        });
+
+        var memberid = sessionStorage.getItem('memberid');
+        
+        async function buttonPressed() {
+            var name = document.getElementById('tf2').value;
+            var nickname = document.getElementById('tf3').value;
+
+            var sql = `update Members set name="${name}", nickname="${nickname}", time = now() where id="${memberid}";`;
+            var objects = await osql.connect(sql);
+
+            document.getElementById('result').innerHTML = '変更しました';
+        }
+
+        function doSelect() {
+            document.getElementById('tf1').value = memberid;
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <h1>ユーザ情報変更</h1>
+    学籍番号:<input id="tf1" value="" type="textfield" disabled>
+    <br>
+    名前:<input id="tf2" value="" type="textfield">
+    <br>
+    ニックネーム:<input id="tf3" value="" type="textfield">
+    <button onclick="buttonPressed()">変更</button>
+    <p id="result"></p>
+
+</body>
+
+</html>

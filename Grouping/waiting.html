@@ -16,7 +16,7 @@
         });
 
         var topicid = osql.getParam('topicid');
-        var memberid = osql.getParam('memberid');
+        var memberid = sessionStorage.getItem('memberid');
 
         var memberUpdate = setInterval(seeMember, 1000);
 
@@ -62,7 +62,7 @@
             var sql = `select * from Topic_Member where memberid= '${memberid}' and  topicid = ${topicid};`;
             var objects = await osql.connect(sql);
             if (objects[0].status!= '未') {
-                location.href = `decide.html?topicid=${topicid}&memberid=${memberid}`;
+                location.href = `decide.html?topicid=${topicid}`;
             }
 
         }
