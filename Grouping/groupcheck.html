@@ -55,7 +55,7 @@
             document.getElementById('word').innerHTML = objects[0].topic;
 
             //学籍番号と名前とワードを取り出す
-            var sql2 = `select id, name, word,time from Words inner join Members on Words.memberid = Members.id where topicid = ${topicid};`;
+            var sql2 = `select id, name, word, Words.time as time from Words inner join Members on Words.memberid = Members.id where topicid = ${topicid};`;
             var objects2 = await osql.connect(sql2);
             console.log(objects2);
 
