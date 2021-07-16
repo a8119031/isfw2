@@ -28,7 +28,7 @@
             var html = '';
             html = html + '<table border="1">';
             html = html + '<tr>';
-            html = html + '<th>グループ</th><th>学籍番号</th><th>名前</th><th>ニックネーム</th>';
+            html = html + '<th>グループ</th><th>学籍番号</th><th>名前</th><th>ニックネーム</th><th>参加時間</th><th>割り当て時間</th>';
             html = html + '</tr>';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
@@ -37,6 +37,8 @@
                 html = html + '<td>' + object.memberid + '</td>';
                 html = html + '<td>' + object.name + '</td>';
                 html = html + '<td>' + object.nickname + '</td>';
+                html = html + '<td>' + object.created_at + '</td>';
+                html = html + '<td>' + object.assigned_at + '</td>';
                 html = html + '</tr>';
             }
             html = html + '</table>';
@@ -53,9 +55,9 @@
             document.getElementById('word').innerHTML = objects[0].topic;
 
             //グループと学籍番号と名前とワードを取り出す
-            var sql2 = `select status, X.memberid, name, word from Topic_Member inner join 
+            var sql2 = `select topicid, status, X.memberid, name, word from Topic_Member inner join 
                        (select * from Members inner join Words on Members.id = Words.memberid) as X 
-                        on Topic_Member.memberid = X.id  where X.topicid = ${topicid} and not status = '未' order by status;`;
+                        on Topic_Member.memberid = X.id where X.topicid = ${topicid} and not status = '未' order by status;`;
             var objects2 = await osql.connect(sql2);
             console.log(objects2);
 
