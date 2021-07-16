@@ -54,7 +54,7 @@
         async function registerWord() {
             var word = document.getElementById('tf1').value;
             console.log(word);
-            var sql = `insert into Words (topicid, memberid, word) values("${topicid}", "${memberid}", "${word}");`;
+            var sql = `insert into Words (topicid, memberid, word, time) values("${topicid}", "${memberid}", "${word}", now());`;
             var objects = await osql.connect(sql);
             document.getElementById('result2').innerHTML = '登録しました';
         }
